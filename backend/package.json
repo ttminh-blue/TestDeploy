@@ -6,10 +6,10 @@
   "scripts": {
     "db:migration": "./node_modules/.bin/ts-node migrations/index.ts up",
     "server:dev": "nodemon --config nodemon.json app.ts",
-    "start": "npm run db:migration && node --unhandled-rejections=strict ./dist/app.js",
+    "start": "npm run db:migration && tsc && node --unhandled-rejections=strict ./dist/app.js",
     "debug": "export DEBUG=* && npm run start",
     "test": "ENV_FILE=./.env.test && mocha -r ts-node/register 'tests/**/*.test.ts' --timeout 20000 --unhandled-rejections=strict --exit",
-    "build": "npx tsc"
+    "build": "rimraf ./dist && tsc"
   },
   "keywords": [],
   "author": "Kiet Pham",
