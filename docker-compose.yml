@@ -1,0 +1,36 @@
+--- # docker compose to build full stack app
+services:
+  db:
+    image: mongo:7
+    container_name: db
+    ports:
+      - 27017:27017
+    volumes:
+      - tedu-courses:/data/db
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    container_name: backend
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+    environment:
+      DB_CONNECTION_STRING: mongodb://db:27017
+      DB_NAME: tedu-courses
+      DEFAULT_PORT: 3000
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - 4200:4200
+
+volumes:
+  tedu-courses:
