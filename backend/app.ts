@@ -18,13 +18,9 @@ const routes: Array<CommonRoutesConfig> = [];
 const debugLog: debug.IDebugger = debug('app');
 
 
-// adding middleware to parse all incoming requests as JSON
 app.use(express.json());
-// adding middleware to allow cross-origin requests
 app.use(cors());
 
-// logging middleware configuration,
-// which will automatically log all HTTP requests handled by Express.js
 const loggerOptions: expressWinston.LoggerOptions = {
   transports: [new winston.transports.Console()],
   format: winston.format.combine(
@@ -35,7 +31,7 @@ const loggerOptions: expressWinston.LoggerOptions = {
 };
 
 if (!process.env.DEBUG) {
-  loggerOptions.meta = false; // when not debugging, log requests as one-liners
+  loggerOptions.meta = false; 
 }
 
 // initialize the logger with the above configuration
