@@ -8,7 +8,7 @@
     "server:dev": "nodemon --config nodemon.json app.ts",
     "start": "npm run db:migration  && node --unhandled-rejections=strict ./dist/app.js",
     "debug": "export DEBUG=* && npm run start",
-    "test": "ENV_FILE=./.env.test && mocha -r ts-node/register 'tests/**/*.test.ts' --timeout 20000 --unhandled-rejections=strict --exit",
+    "test": "mocha -r ts-node/register 'tests/**/*.test.ts' --timeout 20000 --unhandled-rejections=strict --exit",
     "build": "npx tsc"
   },
   "keywords": [],

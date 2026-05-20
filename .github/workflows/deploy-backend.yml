@@ -12,22 +12,25 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Lấy mã nguồn từ GitHub
+      - name: Get source code from GitHub
         uses: actions/checkout@v4
 
-      - name: Cài đặt Node.js phiên bản 20
+      - name: Install Node.js v20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Cài đặt các thư viện (npm install)
+      - name: Install libraries
         working-directory: ./backend
         run: npm install
 
-    
+      - name: Run tests
+        working-directory: ./backend
+        run: npm test
+
   deploy:
     needs: build-and-test 
     runs-on: ubuntu-latest
     steps:
-      - name: Kích hoạt Deploy trên Render
+      - name: Trigger Render
         run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
