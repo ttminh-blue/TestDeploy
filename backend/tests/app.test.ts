@@ -6,6 +6,6 @@ describe('GET /ping', () => {
   it('should return pong', async () => {
     const result = await supertest(app).get('/ping');
     expect(result.statusCode).to.equal(200);
-    expect(result.text).to.equal('aaaaaa');
+    expect(result.text).to.equal('pong');
   });
 });
