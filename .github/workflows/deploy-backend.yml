@@ -1,0 +1,39 @@
+name: Tự động Deploy Backend
+
+on:
+  push:
+    branches:
+      - main
+
+    paths:
+      - 'backend/**'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lấy mã nguồn từ GitHub
+        uses: actions/checkout@v4
+
+      - name: Cài đặt Node.js phiên bản 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Cài đặt các thư viện (npm install)
+        working-directory: ./backend
+        run: npm install
+
+      # Nếu sau này bạn viết Unit Test, hãy bỏ comment 2 dòng dưới đây để CI tự chạy test
+      # - name: Chạy Test kiểm tra lỗi
+      #   working-directory: ./backend
+      #   run: npm test
+
+  # === GIAI ĐOẠN 2: CD (Triển khai liên tục) ===
+  deploy:
+    needs: build-and-test # Bắt buộc giai đoạn 1 phải thành công (màu xanh) thì mới chạy tiếp
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kích hoạt Deploy trên Render
+        # Dùng lệnh curl để gọi HTTP POST đến cái link bí mật đã giấu ở Bước 2
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
