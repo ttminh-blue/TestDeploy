@@ -17,9 +17,7 @@ const port = Number(process.env.PORT) || 3000;
 const routes: Array<CommonRoutesConfig> = [];
 const debugLog: debug.IDebugger = debug('app');
 
-/*
-  Middleware registration
-*/
+
 // adding middleware to parse all incoming requests as JSON
 app.use(express.json());
 // adding middleware to allow cross-origin requests
